@@ -93,5 +93,5 @@ lp_str = lp_str.strip()
 lp_arr = lp_str.split()
 previos_p = Point(float(lp_arr[0]), float(lp_arr[1]))
 coefs = GetFunctionCoefs(func_str)
-print(coefs)
-# Go(previos_p, coefs)
+
+
