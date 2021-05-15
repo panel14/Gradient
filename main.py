@@ -4,6 +4,9 @@ import math
 EPS = 0.00001
 RATE = 0.1
 
+is_minimum = True
+param_dict = {True: -1, False: 1}
+coefs = [1, 1, 1]
 
 class Point:
 
@@ -41,14 +44,12 @@ def GetFunctionCoefs(str_form):
                 coefs[num] = int(str) * coefs[num]
 
     if CheckFunction(str_form):
-        coefs = [1, 1, 1]
         for i in range(3):
             match = re.search(r'[+-]?\s*\d*[xyz](\^2/\d+)?', str_form)
             find = match.group(0)
             Analyse(find)
             str_form = str_form.replace(find, '')
             str_form.strip()
-        return coefs
 
 
 def CheckFunction(str_form):
@@ -60,31 +61,39 @@ def CheckFunction(str_form):
         return True
 
 
-def GetDx(coefs, point):
-    return 2 * point.x / (coefs[0] * coefs[2])
+def get_dx(point):
+    delta_point = Point(point.x + EPS, point.y)
+    return (get_function_value(delta_point) - get_function_value(point)) / EPS
 
 
-def GetDy(coefs, point):
-    return 2 * point.y / (coefs[1] * coefs[2])
+def get_dy(point):
+    delta_point = Point(point.x, point.y + EPS)
+    return (get_function_value(delta_point) - get_function_value(point)) / EPS
 
 
-def GetFunctionValue(coefs, point):
-    return (point.x ** 2 / coefs[0] ** 2 + point.y ** 2 / coefs[1] ** 2)/coefs[2]
+def get_function_value(point):
+    return (point.x ** 2 / coefs[0] ** 2 + point.y ** 2 / coefs[1] ** 2) / coefs[2]
 
 
-def Go(point, coefs):
-    previos_p = point
-    current_p = Point(0, 0)
-    x_bord = 99999
-    y_bord = 99999
-    while (x_bord >= EPS) and (y_bord >= EPS):
-        current_p.x = previos_p.x - RATE * GetDx(coefs, previos_p)
-        current_p.y = previos_p.y - RATE * GetDy(coefs, previos_p)
-        x_bord = abs(current_p.x - previos_p.x)
-        y_bord = abs(current_p.y - previos_p.y)
-        previos_p = current_p
-    z = GetFunctionValue(coefs, current_p)
-    print('Minimum: (', format(current_p.x, '.6f'), ';', format(current_p.y, '.6f'), ';', format(z, '.6f'), ')')
+def get_gradient(point):
+    return get_dx(point) + get_dy(point)
+
+
+def get_minimum(point, axes):
+    current_p = point
+    previous_p = Point(0, 0)
+    while abs(get_function_value(current_p) - get_function_value(previous_p)) >= EPS:
+        previous_p.x = current_p.x
+        previous_p.y = current_p.y
+        grad_value = get_gradient(previous_p)
+        current_p.x = previous_p.x + param_dict.get(is_minimum) * RATE * grad_value
+        current_p.y = previous_p.y + param_dict.get(is_minimum) * RATE * grad_value
+    z = get_function_value(current_p)
+    axes.scatter(current_p.x, current_p.y, get_function_value(current_p), color='red')
+    find = 'Минимум'
+    if not is_minimum:
+        find = 'Максимум'
+    print(find, ': (', format(current_p.x, '.6f'), ';', format(current_p.y, '.6f'), ';', format(z, '.6f'), ')')
 
 
 func_str = input('Enter function\n')
@@ -92,6 +101,3 @@ lp_str = input('Input coordinates of point. Format: x y z\n')
 lp_str = lp_str.strip()
 lp_arr = lp_str.split()
 previos_p = Point(float(lp_arr[0]), float(lp_arr[1]))
-coefs = GetFunctionCoefs(func_str)
-
-
