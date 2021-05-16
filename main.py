@@ -1,12 +1,17 @@
 import re
 import math
 
-EPS = 0.00001
-RATE = 0.1
+eps = 0.00001
+rate = 0.1
+coefs = [1, 1, 1]
 
 is_minimum = True
+is_repeat = False
+is_param = False
+criterion = 1
+
 param_dict = {True: -1, False: 1}
-coefs = [1, 1, 1]
+
 
 class Point:
 
@@ -62,38 +67,62 @@ def CheckFunction(str_form):
 
 
 def get_dx(point):
-    delta_point = Point(point.x + EPS, point.y)
-    return (get_function_value(delta_point) - get_function_value(point)) / EPS
+    # return 2 * point.x / (coefs[0] * coefs[2])
+    delta_p = Point(point.x + eps, point.y)
+    test = (get_function_value(delta_p) - get_function_value(point)) / eps
+    return test
 
 
 def get_dy(point):
-    delta_point = Point(point.x, point.y + EPS)
-    return (get_function_value(delta_point) - get_function_value(point)) / EPS
+    # return 2*point.y / (coefs[1] * coefs[2])
+    delta_p = Point(point.x, point.y + eps)
+    test = (get_function_value(delta_p) - get_function_value(point)) / eps
+    return test
 
 
 def get_function_value(point):
-    return (point.x ** 2 / coefs[0] ** 2 + point.y ** 2 / coefs[1] ** 2) / coefs[2]
+    return (point.x ** 2 / coefs[0] + point.y ** 2 / coefs[1]) / coefs[2]
 
 
 def get_gradient(point):
     return get_dx(point) + get_dy(point)
 
 
+def get_first_criterion(cur_p, prev_p, eps):
+    func_val_1 = get_function_value(cur_p)
+    func_val_2 = get_function_value(prev_p)
+    if abs(func_val_1 - func_val_2) >= eps:
+        return True
+    else:
+        return False
+
+
+def get_sec_criterion(cur_p, prev_p, eps):
+    x_sub = cur_p.x - prev_p.x
+    y_sub = cur_p.y - prev_p.y
+    if abs(x_sub) >= eps and abs(y_sub) >= eps:
+        return True
+    else:
+        return False
+
+
 def get_minimum(point, axes):
     current_p = point
     previous_p = Point(0, 0)
-    while abs(get_function_value(current_p) - get_function_value(previous_p)) >= EPS:
+    main_criterion = get_first_criterion
+    if criterion == 2:
+        main_criterion = get_sec_criterion
+    while main_criterion(current_p, previous_p, eps):
         previous_p.x = current_p.x
         previous_p.y = current_p.y
-        grad_value = get_gradient(previous_p)
-        current_p.x = previous_p.x + param_dict.get(is_minimum) * RATE * grad_value
-        current_p.y = previous_p.y + param_dict.get(is_minimum) * RATE * grad_value
+        current_p.x = previous_p.x + param_min_dict.get(is_minimum) * rate * abs(get_dx(previous_p))
+        current_p.y = previous_p.y + param_min_dict.get(is_minimum) * rate * abs(get_dy(previous_p))
     z = get_function_value(current_p)
     axes.scatter(current_p.x, current_p.y, get_function_value(current_p), color='red')
     find = 'Минимум'
     if not is_minimum:
         find = 'Максимум'
-    print(find, ': (', format(current_p.x, '.6f'), ';', format(current_p.y, '.6f'), ';', format(z, '.6f'), ')')
+    print(f'{find}: ({current_p.x:.6f}; {current_p.y:.6f}; {z:.6f}).')
 
 
 func_str = input('Enter function\n')
