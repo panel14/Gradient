@@ -17,10 +17,26 @@ class Point:
         math.hypot(self.x, self.y)
 
 
-def GetFunctionCoefs(str_form):
+def make_data():
+    x = np.arange(-10, 10, 0.1)
+    y = np.arange(-10, 10, 0.1)
+    x_grid, y_grid = np.meshgrid(x, y)
+    z_grid = (x_grid ** 2 / coefs[0] + y_grid ** 2 / coefs[1]) / coefs[2]
+    return x_grid, y_grid, z_grid
+
+
+def show_function():
+    x, y, z = make_data()
+    fig = plt.figure(figsize=(15, 15))
+    axes = fig.add_subplot(1, 1, 1, projection='3d')
+    axes.plot_surface(x, y, z, rstride=5, cstride=5, alpha=0.7)
+    return axes
+
+
+def get_function_coefs(str_form, coefs):
     var_dict = {'x': 0, 'y': 1, 'z': 2}
 
-    def Analyse(str: str):
+    def analyse(str: str):
         letter = re.search(r'[xyz]', str)
         num = var_dict.get(letter.group(0))
         start = 0
@@ -35,30 +51,27 @@ def GetFunctionCoefs(str_form):
                 str = str[start + 1:len(str)]
                 coefs[num] = int(str) * coefs[num]
         else:
-            find = re.search(r'\d+', str)
-            if find != None:
-                str = find.group(0)
+            funded_str = re.search(r'\d+', str)
+            if funded_str is not None:
+                str = funded_str.group(0)
                 coefs[num] = int(str) * coefs[num]
 
-    if CheckFunction(str_form):
-        coefs = [1, 1, 1]
+    if check_function(str_form):
         for i in range(3):
             match = re.search(r'[+-]?\s*\d*[xyz](\^2/\d+)?', str_form)
             find = match.group(0)
-            Analyse(find)
+            analyse(find)
             str_form = str_form.replace(find, '')
             str_form.strip()
-        return coefs
 
 
-def CheckFunction(str_form):
+def check_function(str_form):
     match = re.search(r'x\^2(/\d+)?\s*[+-]\s*y\^2(/\d+)?\s*=\s*-*\d*z', str_form)
     if not match:
         print('Функция введена неверно')
         return False
     else:
         return True
-
 
 def GetDx(coefs, point):
     return 2 * point.x / (coefs[0] * coefs[2])
