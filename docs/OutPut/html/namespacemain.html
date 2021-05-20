@@ -109,7 +109,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a30557e348c1aa6b21e6bc75972389f5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция, определяет, пройден ли второй критерий останова  <a href="namespacemain.html#a30557e348c1aa6b21e6bc75972389f5a">More...</a><br /></td></tr>
 <tr class="separator:a30557e348c1aa6b21e6bc75972389f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0c0fc71cdc257b3366712b49f8d7274"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274">get_minimum</a> (point, <a class="el" href="namespacemain.html#a00d1ea2887e9bff279a7922741881cc8">axes</a>)</td></tr>
-<tr class="memdesc:ae0c0fc71cdc257b3366712b49f8d7274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция градиентного спуска  <a href="namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274">More...</a><br /></td></tr>
+<tr class="memdesc:ae0c0fc71cdc257b3366712b49f8d7274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Метод градиентного спуска  <a href="namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274">More...</a><br /></td></tr>
 <tr class="separator:ae0c0fc71cdc257b3366712b49f8d7274"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1dc455306a096262ddbb9bd436dbb0e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ad1dc455306a096262ddbb9bd436dbb0e">form_output_mess</a> (<a class="el" href="namespacemain.html#aa1a3c83d9c2f9ba1484920518fdfbf12">is_coefs_format</a>)</td></tr>
 <tr class="memdesc:ad1dc455306a096262ddbb9bd436dbb0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция формирования сообщения для пользователя  <a href="namespacemain.html#ad1dc455306a096262ddbb9bd436dbb0e">More...</a><br /></td></tr>
@@ -123,10 +123,14 @@ Functions</h2></td></tr>
 <tr class="memitem:a4990785e112dae96f6f9aa14a4117a79"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a4990785e112dae96f6f9aa14a4117a79">check_format</a> (<a class="el" href="namespacemain.html#aa1a3c83d9c2f9ba1484920518fdfbf12">is_coefs_format</a>, str)</td></tr>
 <tr class="memdesc:a4990785e112dae96f6f9aa14a4117a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция проверки формата строки  <a href="namespacemain.html#a4990785e112dae96f6f9aa14a4117a79">More...</a><br /></td></tr>
 <tr class="separator:a4990785e112dae96f6f9aa14a4117a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad07a1f032c27587fdab3bc353e8f0aa"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#aad07a1f032c27587fdab3bc353e8f0aa">get_grad_type</a> (is_abs, value)</td></tr>
+<tr class="memdesc:aad07a1f032c27587fdab3bc353e8f0aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция, задаёт тип движения алгоритма градиентного спуска  <a href="namespacemain.html#aad07a1f032c27587fdab3bc353e8f0aa">More...</a><br /></td></tr>
+<tr class="separator:aad07a1f032c27587fdab3bc353e8f0aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:af684ef5b36473b45d6982adfc126cb40"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#af684ef5b36473b45d6982adfc126cb40">eps</a> = 0.0000001</td></tr>
+<tr class="memdesc:af684ef5b36473b45d6982adfc126cb40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Критерий точности алгоритма градиентного спуска  <a href="namespacemain.html#af684ef5b36473b45d6982adfc126cb40">More...</a><br /></td></tr>
 <tr class="separator:af684ef5b36473b45d6982adfc126cb40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00f10a2eecaaa8ed75aff0c9060a3071"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a00f10a2eecaaa8ed75aff0c9060a3071">rate</a> = 0.01</td></tr>
 <tr class="memdesc:a00f10a2eecaaa8ed75aff0c9060a3071"><td class="mdescLeft">&#160;</td><td class="mdescRight">Коэффициент обучения (гиперпараметр)  <a href="namespacemain.html#a00f10a2eecaaa8ed75aff0c9060a3071">More...</a><br /></td></tr>
@@ -152,6 +156,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a8321819357b249e954fe06b3ba35144e"><td class="memItemLeft" align="right" valign="top">dictionary&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a8321819357b249e954fe06b3ba35144e">param_min_dict</a> = {True: -1, False: 1}</td></tr>
 <tr class="memdesc:a8321819357b249e954fe06b3ba35144e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Словарь, по которому происхоидит определение поиска максимума/минимума  <a href="namespacemain.html#a8321819357b249e954fe06b3ba35144e">More...</a><br /></td></tr>
 <tr class="separator:a8321819357b249e954fe06b3ba35144e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aad2de7fa69e9cfafc88216b6f07e97"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a7aad2de7fa69e9cfafc88216b6f07e97">go_by_abs</a> = False</td></tr>
+<tr class="memdesc:a7aad2de7fa69e9cfafc88216b6f07e97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Переменная, несёт в себе логическое значение параметра GO_BY_ABS.  <a href="namespacemain.html#a7aad2de7fa69e9cfafc88216b6f07e97">More...</a><br /></td></tr>
+<tr class="separator:a7aad2de7fa69e9cfafc88216b6f07e97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a953d246391f9405863e5936f214bc444"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a953d246391f9405863e5936f214bc444">code</a> = input('Отправьте команду. Чтобы увидеть полный список команд и параметров введите &quot;show&quot;:\n')</td></tr>
 <tr class="memdesc:a953d246391f9405863e5936f214bc444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Консольная часть программы  <a href="namespacemain.html#a953d246391f9405863e5936f214bc444">More...</a><br /></td></tr>
 <tr class="separator:a953d246391f9405863e5936f214bc444"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -333,7 +340,7 @@ Here is the caller graph for this function:</div>
 <map name="anamespacemain_a7ea3e7e7bf3baeeb4250c61cbd5b68b1_icgraph" id="anamespacemain_a7ea3e7e7bf3baeeb4250c61cbd5b68b1_icgraph">
 <area shape="rect" title="Функция частной производной по аргументу x в заданной точке" alt="" coords="185,31,279,57"/>
 <area shape="rect" href="namespacemain.html#ac532031b25de5d924825e0e153bf1533" title="Функция, находит значение градиента в заданной точке" alt="" coords="9,5,134,32"/>
-<area shape="rect" href="namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274" title="Функция градиентного спуска" alt="" coords="5,56,137,83"/>
+<area shape="rect" href="namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274" title="Метод градиентного спуска" alt="" coords="5,56,137,83"/>
 </map>
 </div>
 
@@ -379,7 +386,7 @@ Here is the caller graph for this function:</div>
 <map name="anamespacemain_a3c890df77486bb881751113237c81a7e_icgraph" id="anamespacemain_a3c890df77486bb881751113237c81a7e_icgraph">
 <area shape="rect" title="Функция частной производной по аргументу y в заданной точке" alt="" coords="185,31,279,57"/>
 <area shape="rect" href="namespacemain.html#ac532031b25de5d924825e0e153bf1533" title="Функция, находит значение градиента в заданной точке" alt="" coords="9,5,134,32"/>
-<area shape="rect" href="namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274" title="Функция градиентного спуска" alt="" coords="5,56,137,83"/>
+<area shape="rect" href="namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274" title="Метод градиентного спуска" alt="" coords="5,56,137,83"/>
 </map>
 </div>
 
@@ -530,10 +537,64 @@ Here is the caller graph for this function:</div>
 <map name="anamespacemain_a9081ad527c3c20318c7daed72ff7b818_icgraph" id="anamespacemain_a9081ad527c3c20318c7daed72ff7b818_icgraph">
 <area shape="rect" title="Функция, находит значение основной функции в заданной точке" alt="" coords="387,81,547,108"/>
 <area shape="rect" href="namespacemain.html#a7ea3e7e7bf3baeeb4250c61cbd5b68b1" title="Функция частной производной по аргументу x в заданной точке" alt="" coords="215,5,309,32"/>
-<area shape="rect" href="namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274" title="Функция градиентного спуска" alt="" coords="5,56,137,83"/>
+<area shape="rect" href="namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274" title="Метод градиентного спуска" alt="" coords="5,56,137,83"/>
 <area shape="rect" href="namespacemain.html#a3c890df77486bb881751113237c81a7e" title="Функция частной производной по аргументу y в заданной точке" alt="" coords="215,56,309,83"/>
 <area shape="rect" href="namespacemain.html#a6a8ed1d7fd75eb8b0b6a39dd589e0aeb" title="Функция, определяет, пройден ли первый критерий останова" alt="" coords="185,157,339,184"/>
 <area shape="rect" href="namespacemain.html#ac532031b25de5d924825e0e153bf1533" title="Функция, находит значение градиента в заданной точке" alt="" coords="9,5,134,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aad07a1f032c27587fdab3bc353e8f0aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad07a1f032c27587fdab3bc353e8f0aa">&#9670;&nbsp;</a></span>get_grad_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def main.get_grad_type </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>is_abs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Функция, задаёт тип движения алгоритма градиентного спуска </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"></td><td>is_abs - логическое значение параметра GO_BY_ABS </td></tr>
+    <tr><td class="paramname"></td><td>value - значение градиента в точке </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>: Соотвествующее значение функции </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"></td><td>модуль value, если движение по модулю градиента </td></tr>
+    <tr><td class="paramname"></td><td>value, если движение по вектору градиента </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="namespacemain_aad07a1f032c27587fdab3bc353e8f0aa_icgraph.png" border="0" usemap="#anamespacemain_aad07a1f032c27587fdab3bc353e8f0aa_icgraph" alt=""/></div>
+<map name="anamespacemain_aad07a1f032c27587fdab3bc353e8f0aa_icgraph" id="anamespacemain_aad07a1f032c27587fdab3bc353e8f0aa_icgraph">
+<area shape="rect" title="Функция, задаёт тип движения алгоритма градиентного спуска" alt="" coords="185,5,321,32"/>
+<area shape="rect" href="namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274" title="Метод градиентного спуска" alt="" coords="5,5,137,32"/>
 </map>
 </div>
 
@@ -603,8 +664,8 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Функция градиентного спуска </p>
-<p>При отсуствии у функции точки максимума/минимума функция возвращает большое значение координат найденной точки </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Метод градиентного спуска </p>
+<p>При отсуствии у функции точки максимума/минимума метод выводит на экран большое значение координат найденной точки </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"></td><td>point - точка, с которой начинается спуск </td></tr>
     <tr><td class="paramname"></td><td>axes - координатная плоскость с построенным графиком функции </td></tr>
@@ -617,10 +678,11 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="namespacemain_ae0c0fc71cdc257b3366712b49f8d7274_cgraph.png" border="0" usemap="#anamespacemain_ae0c0fc71cdc257b3366712b49f8d7274_cgraph" alt=""/></div>
 <map name="anamespacemain_ae0c0fc71cdc257b3366712b49f8d7274_cgraph" id="anamespacemain_ae0c0fc71cdc257b3366712b49f8d7274_cgraph">
-<area shape="rect" title="Функция градиентного спуска" alt="" coords="5,56,137,83"/>
-<area shape="rect" href="namespacemain.html#a7ea3e7e7bf3baeeb4250c61cbd5b68b1" title="Функция частной производной по аргументу x в заданной точке" alt="" coords="185,5,279,32"/>
-<area shape="rect" href="namespacemain.html#a9081ad527c3c20318c7daed72ff7b818" title="Функция, находит значение основной функции в заданной точке" alt="" coords="327,56,487,83"/>
-<area shape="rect" href="namespacemain.html#a3c890df77486bb881751113237c81a7e" title="Функция частной производной по аргументу y в заданной точке" alt="" coords="185,107,279,133"/>
+<area shape="rect" title="Метод градиентного спуска" alt="" coords="5,81,137,108"/>
+<area shape="rect" href="namespacemain.html#a7ea3e7e7bf3baeeb4250c61cbd5b68b1" title="Функция частной производной по аргументу x в заданной точке" alt="" coords="207,5,300,32"/>
+<area shape="rect" href="namespacemain.html#a9081ad527c3c20318c7daed72ff7b818" title="Функция, находит значение основной функции в заданной точке" alt="" coords="369,56,529,83"/>
+<area shape="rect" href="namespacemain.html#a3c890df77486bb881751113237c81a7e" title="Функция частной производной по аргументу y в заданной точке" alt="" coords="207,107,300,133"/>
+<area shape="rect" href="namespacemain.html#aad07a1f032c27587fdab3bc353e8f0aa" title="Функция, задаёт тип движения алгоритма градиентного спуска" alt="" coords="185,157,321,184"/>
 </map>
 </div>
 
@@ -886,6 +948,8 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
+<p>Критерий точности алгоритма градиентного спуска </p>
+
 </div>
 </div>
 <a id="acf3891a9747ee2fc92c6615fb0846ec4"></a>
@@ -913,6 +977,22 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7aad2de7fa69e9cfafc88216b6f07e97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7aad2de7fa69e9cfafc88216b6f07e97">&#9670;&nbsp;</a></span>go_by_abs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool main.go_by_abs = False</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Переменная, несёт в себе логическое значение параметра GO_BY_ABS. </p>
 
 </div>
 </div>

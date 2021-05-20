@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-## @var Критерий точности алгоритма градиентного спуска
+## @brief Критерий точности алгоритма градиентного спуска
 eps = 0.0000001
 ## @brief Коэффициент обучения (гиперпараметр)
 rate = 0.01
@@ -27,6 +27,8 @@ is_param = False
 criterion = 1
 ## @brief Словарь, по которому происхоидит определение поиска максимума/минимума
 param_min_dict = {True: -1, False: 1}
+## @brief Переменная, несёт в себе логическое значение параметра GO_BY_ABS
+go_by_abs = False
 
 
 ## Класс точки
@@ -102,7 +104,6 @@ def get_function_coefs(str_form, coefs):
     if check_function(str_form):
         for i in range(3):
             match = re.findall(r'[+-]?\s*\d*([xyz]+\^2/?\d?)', str_form)
-            print(match)
             find = match[i]
             analyse(find)
             str_form = str_form.replace(find, '')
@@ -194,9 +195,9 @@ def get_sec_criterion(cur_p, prev_p, eps):
         return False
 
 
-## Функция градиентного спуска
+## Метод градиентного спуска
 #
-# @brief При отсуствии у функции точки максимума/минимума функция возвращает большое значение координат
+# @brief При отсуствии у функции точки максимума/минимума метод выводит на экран большое значение координат
 # найденной точки
 # @param: point - точка, с которой начинается спуск
 # @param: axes - координатная плоскость с построенным графиком функции
@@ -210,8 +211,10 @@ def get_minimum(point, axes):
     while main_criterion(current_p, previous_p, eps):
         previous_p.x = current_p.x
         previous_p.y = current_p.y
-        current_p.x = previous_p.x + param_min_dict.get(is_minimum) * rate * abs(get_dx(previous_p))
-        current_p.y = previous_p.y + param_min_dict.get(is_minimum) * rate * abs(get_dy(previous_p))
+        current_p.x = previous_p.x + param_min_dict.get(is_minimum) * rate * \
+                      get_grad_type(go_by_abs, get_dx(previous_p))
+        current_p.y = previous_p.y + param_min_dict.get(is_minimum) * rate * \
+                      get_grad_type(go_by_abs, get_dy(previous_p))
     z = get_function_value(current_p)
     axes.scatter(current_p.x, current_p.y, get_function_value(current_p), color='red')
     find = 'Минимум'
@@ -283,6 +286,20 @@ def check_format(is_coefs_format, str):
         return True
 
 
+## Функция, задаёт тип движения алгоритма градиентного спуска
+#
+# @param: is_abs - логическое значение параметра GO_BY_ABS
+# @param: value - значение градиента в точке
+# @return:  Соотвествующее значение функции
+# @retval: модуль value, если движение по модулю градиента
+# @retval: value, если движение по вектору градиента
+def get_grad_type(is_abs, value):
+    if is_abs:
+        return abs(value)
+    else:
+        return value
+
+
 ## @brief Консольная часть программы
 #
 # @brief Данная часть программы отвечает за консольное взаимодействие с пользователем - прием
@@ -325,6 +342,7 @@ while code != 'end':
               '"r" - повтор прошлой команды.\n'
               '"f" - ввод ранее введённой функции.\n'
               '"p" - ввод ранее введённой точки.\n'
+              '"info" - вывод значений всех параметров функции\n'
               'Параметры:\n'
               '"IS_MINIMUM" - определяет, ищется максимум или минимум функции. Формат ввода: IS_MINIMUM = True.'
               'По умолчанимю True.\n'
@@ -332,10 +350,18 @@ while code != 'end':
               'Формат ввода: FORMAT_COEFS = True. По умолчанию True.\n'
               '"HYPER" - задаёт коэффициент обучения. По умолчанию равен 0.01.\n'
               '"EPS" - задаёт параметр останова алгоритма. По умолчанию равен 0.0000001.\n'
-              '"CRITERION" - задаёт критерий останова. По умолчанию равен 1.\n')
+              '"CRITERION" - задаёт критерий останова. По умолчанию равен 1.\n'
+              '"GO_BY_ABS" - параметр, определяющий движение по градиенту без учёта направления.')
     elif code == "r":
         code = repeat_code
         is_repeat = True
+    elif code == "info":
+        print(f'IS_MINIMUM = {is_minimum};\n'
+              f'FORMAT_COEFS = {is_coefs_format};\n'
+              f'HYPER = {rate};\n'
+              f'EPS = {eps};\n'
+              f'CRITERION = {criterion};\n'
+              f'GO_BY_ABS = {go_by_abs};\n')
     elif code.__contains__('IS_MINIMUM'):
         if code.__contains__('True'):
             is_minimum = True
@@ -362,6 +388,15 @@ while code != 'end':
             print('|f(x1,y1) - f(x0,y0)| < EPS')
         else:
             print('|x1 - x0| < EPS AND |y1 - y0| < EPS')
+        is_param = True
+    elif code.__contains__('GO_BY_ABS'):
+        if code.__contains__('True'):
+            go_by_abs = True
+            print('Движение по модулю градиента.\nВнимание! Данная функция является экспериментальной '
+                  'и может дать неверные результы.')
+        else:
+            go_by_abs = False
+            print('Движение по вектору градиента.')
         is_param = True
     else:
         print('Неизвестная команда')
