@@ -1,0 +1,5 @@
+<map id="main.get_dx" name="main.get_dx">
+<area shape="rect" id="node1" title="Функция частной производной по аргументу x в заданной точке" alt="" coords="185,31,279,57"/>
+<area shape="rect" id="node2" href="$namespacemain.html#ac532031b25de5d924825e0e153bf1533" title="Функция, находит значение градиента в заданной точке" alt="" coords="9,5,134,32"/>
+<area shape="rect" id="node3" href="$namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274" title="Функция градиентного спуска" alt="" coords="5,56,137,83"/>
+</map>

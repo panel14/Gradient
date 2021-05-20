@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import re
@@ -7,31 +7,48 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
+## @var Критерий точности алгоритма градиентного спуска
 eps = 0.0000001
+## @brief Коэффициент обучения (гиперпараметр)
 rate = 0.01
+## @brief Коэффициенты введённой пользователем функции
 coefs = [1, 1, 1]
 
+## @brief Переменная, несёт в себе логическое значение параметра FORMAT_COEFS
 is_coefs_format = False
+## @brief Переменная, несёт в себе логическое значение параметра IS_MINIMUM
 is_minimum = True
+## @brief Переменная, определяет, был ли использован повтор команды в консоли
 is_repeat = False
+## @brief Переменная, определяет, является ли введённое пользователем сообщение параметром
 is_param = False
+## @brief Переменная, несёт в себе значение параметра CRITERION
 criterion = 1
-
+## @brief Словарь, по которому происхоидит определение поиска максимума/минимума
 param_min_dict = {True: -1, False: 1}
 
 
+## Класс точки
 class Point:
-
+    # Конструктор класса точки
+    #
+    # @param: x - Значение x координаты точки
+    # @param: y - Значение y координаты точки
     def __init__(self, x: float, y: float):
         self.x, self.y = x, y
 
+    ## Операнд вычитания точек
     def __sub__(self, other):
         return Point(self.x - other.x, self.y - self.y)
 
+    ## Модульное значение точки
     def __abs__(self):
         math.hypot(self.x, self.y)
 
 
+## Функция для создания координатной плоскости
+#
+# @return: Координаты точек плоскости
 def make_data():
     x = np.arange(-10, 10, 0.1)
     y = np.arange(-10, 10, 0.1)
@@ -40,6 +57,9 @@ def make_data():
     return x_grid, y_grid, z_grid
 
 
+## Функция для построения графиков
+#
+# @return: Координатная плоскость с построенным графиком
 def show_function():
     x, y, z = make_data()
     fig = plt.figure(figsize=(15, 15))
@@ -48,9 +68,16 @@ def show_function():
     return axes
 
 
+## Функция парсинга вводимой пользователем функции
+#
+# @param: str_form - строка, введённая пользователем
+# @param: coefs - список коэффициентов (изначально равен [1, 1, 1]
 def get_function_coefs(str_form, coefs):
     var_dict = {'x': 0, 'y': 1, 'z': 2}
 
+    # Функция анализа строки
+    #
+    # @param: подстрока, содержащая в себе одну из переменных: x, y или z
     def analyse(str: str):
         letter = re.search(r'[xyz]', str)
         num = var_dict.get(letter.group(0))
@@ -78,39 +105,68 @@ def get_function_coefs(str_form, coefs):
             analyse(find)
             str_form = str_form.replace(find, '')
             str_form.strip()
+            return True
+    return False
 
 
+## Функция проверки строки
+# @brief Функция проверяет введённую строку на соотвествие функции вида (x^2/a + y^2/b = cz)
+#
+# @param: str_form - введённая пользователем строка
+# @return: логическое значение, прошла ли строка проверку
+# @retval: True - проверка пройдена
+# @retval: False - проверка не пройдена
 def check_function(str_form):
     match = re.search(r'x\^2(/\d+)?\s*[+-]\s*y\^2(/\d+)?\s*=\s*-*\d*z', str_form)
     if not match:
-        print('Функция введена неверно')
         return False
     else:
         return True
 
 
+## Функция частной производной по аргументу x в заданной точке
+#
+# @param: point - точка, в которой находится значение производной
+# @return: dx - значение частной производной в заданной точке
 def get_dx(point):
-    # return 2 * point.x / (coefs[0] * coefs[2])
     delta_p = Point(point.x + eps, point.y)
-    test = (get_function_value(delta_p) - get_function_value(point)) / eps
-    return test
+    dx = (get_function_value(delta_p) - get_function_value(point)) / eps
+    return dx
 
 
+## Функция частной производной по аргументу y в заданной точке
+#
+# @param: point - точка, в которой находится значение производной
+# @return: dy - значение частной производной в заданной точке
 def get_dy(point):
-    # return 2*point.y / (coefs[1] * coefs[2])
     delta_p = Point(point.x, point.y + eps)
-    test = (get_function_value(delta_p) - get_function_value(point)) / eps
-    return test
+    dy = (get_function_value(delta_p) - get_function_value(point)) / eps
+    return dy
 
 
+## Функция, находит значение основной функции в заданной точке
+#
+# @param: point - точка, в которой находится значение функции
+# @return: значение функции в заданной точке
 def get_function_value(point):
     return (point.x ** 2 / coefs[0] + point.y ** 2 / coefs[1]) / coefs[2]
 
 
+## Функция, находит значение градиента в заданной точке
+#
+# @param: point - точка, в которой находится значение градиента функции
+# @return: значение градиента функции в заданной точке
 def get_gradient(point):
     return get_dx(point) + get_dy(point)
 
 
+## Функция, определяет, пройден ли первый критерий останова
+# @brief Происходит определение прохождения алгоритмом градиентного спуска первого критерия останова:
+# |f(cur_p) - f(prev_p)| <= eps
+# @param: cur_p (current point) - текущая точка алгоритма
+# @param: prev_p (previous point) - предыдущая точка алгоритма
+# @retval: True - критерий не преодолен, алгоритм продолжается
+# @retval: False - критерий преодолен, алгоритм останавливается
 def get_first_criterion(cur_p, prev_p, eps):
     func_val_1 = get_function_value(cur_p)
     func_val_2 = get_function_value(prev_p)
@@ -120,6 +176,13 @@ def get_first_criterion(cur_p, prev_p, eps):
         return False
 
 
+## Функция, определяет, пройден ли второй критерий останова
+# @brief Происходит определение прохождения алгоритмом градиентного спуска второго критерия останова:
+# |cur_p - prev_p| <= eps
+# @param: cur_p (current point) - текущая точка алгоритма
+# @param: prev_p (previous point) - предыдущая точка алгоритма
+# @retval: True - критерий не преодолен, алгоритм продолжается
+# @retval: False - критерий преодолен, алгоритм останавливается
 def get_sec_criterion(cur_p, prev_p, eps):
     x_sub = cur_p.x - prev_p.x
     y_sub = cur_p.y - prev_p.y
@@ -129,6 +192,13 @@ def get_sec_criterion(cur_p, prev_p, eps):
         return False
 
 
+## Функция градиентного спуска
+#
+# @brief При отсуствии у функции точки максимума/минимума функция возвращает большое значение координат
+# найденной точки
+# @param: point - точка, с которой начинается спуск
+# @param: axes - координатная плоскость с построенным графиком функции
+# @return: Вывод в консоль координат найденной точки экстремума, график функции, с отмеченной найденной точкой
 def get_minimum(point, axes):
     current_p = point
     previous_p = Point(0, 0)
@@ -148,53 +218,100 @@ def get_minimum(point, axes):
     print(f'{find}: ({current_p.x:.6f}; {current_p.y:.6f}; {z:.6f}).')
 
 
+## Функция формирования сообщения для пользователя
+#
+# @brief Формирует сообщение о вводе функции на основе значения параметра FORMAT_COEFS
+# @param: is_coefs_format - логическая переменная, передаёт значение параметра FORMAT_COEFS
+# @return: Выводит сообщение для пользователя и получает от него строку
+def form_output_mess(is_coefs_format):
+    format = 'x^2/2 - y^2/2 = 2z.'
+    if is_coefs_format:
+        format = '2 -2 2'
+    func_str = input('Введите функцию. Формат: ' + format +
+                     '\nЧтобы изменить формат ввода измените параметр "FORMAT_COEFS" на True.\n')
+    return func_str
+
+
+## Функция воспроизведения предыдущей команды
+#
+# @param: func_str - введённая пользователем строка
+# @param: memory_func - последняя введённая пользователем функция
+# @return: Если введенная функция эквивалентна предыдущей, строка становится равной ей
+def remember_func(func_str, memory_func):
+    if func_str == 'f':
+        print('Введено: ', memory_func)
+        return memory_func
+    else:
+        return func_str
+
+
+## Функция воспроизведения предыдущей точки
+#
+# @param: func_str - введённая пользователем строка
+# @param: memory_func - последняя введённая пользователем точка
+# @return: Если введенная точка эквивалентна предыдущей, строка становится равной ей
+def remember_point(point_str, memory_point):
+    if point_str == 'p':
+        print('Введено: ', memory_point)
+        return memory_point
+    else:
+        return point_str
+
+
+## Функция проверки формата строки
+#
+# @brief Осуществляется проверка введённой строки
+# @param: is_coefs_format - логическая переменная, передаёт значение параметра FORMAT_COEFS
+# @param: str - анализируемая строка
+# @return: Логическое значение, была ли введенная строка верной по формату
+def check_format(is_coefs_format, str):
+    if not is_coefs_format:
+        if get_function_coefs(str, coefs):
+            return True
+        else:
+            return False
+    else:
+        match = re.search(r'\d\s+\d\s+\d', str)
+        if not match:
+            return False
+        str = str.strip()
+        coefs_arr = str.split()
+        for i in range(3):
+            coefs[i] = int(coefs_arr[i])
+        return True
+
+
+## @brief Консольная часть программы
+#
+# @brief Данная часть программы отвечает за консольное взаимодействие с пользователем - прием
+# и анализ введённых пользователем команд и значений и их анализ
 code = input('Отправьте команду. Чтобы увидеть полный список команд и параметров введите "show":\n')
 repeat_code = ''
 f = ''
 p = ''
 while code != 'end':
     if code == 'find_extra':
-        format = 'x^2/2 - y^2/2 = 2z.'
-        if is_coefs_format:
-            format = '2 -2 2'
-        func_str = input('Введите функцию. Формат: ' + format +
-                         '\nЧтобы изменить формат ввода измените параметр "FORMAT_COEFS" на True.\n')
-
-        if func_str == 'f':
-            func_str = f
-            print('Введено: ', f)
-
-        if not is_coefs_format:
-            get_function_coefs(func_str, coefs)
-        else:
-            print("Введите коэффициенты для уравнения параболоида:")
-            func_str = func_str.strip()
-            coefs_arr = func_str.split()
-            for i in range(3):
-                coefs[i] = int(coefs_arr[i])
+        func_str = form_output_mess(is_coefs_format)
+        func_str = remember_func(func_str, f)
+        if not check_format(is_coefs_format, func_str):
+            print('Неверный формат ввода.')
+            continue
         axes = show_function()
         lp_str = input('Введите координаты точки. Формат: x y. Координата z найдётся автоматически.\n')
-
-        if lp_str == 't':
-            lp_str = t
-            print('Введено: ', t)
-
+        lp_str = remember_point(lp_str, p)
         lp_str = lp_str.strip()
         lp_arr = lp_str.split()
         previous_p = Point(float(lp_arr[0]), float(lp_arr[1]))
         get_minimum(previous_p, axes)
         plt.show()
         f = func_str
-        t = lp_str
-        coefs = [1, 1, 1]
+        p = lp_str
     elif code == 'graph':
-        func_str = input('Введите функцию:\n')
-
-        if func_str == 'f':
-            func_str = f
-            print('Введено: ', f)
-
-        get_function_coefs(func_str, coefs)
+        func_str = form_output_mess(is_coefs_format)
+        func_str = remember_func(func_str, f)
+        if not check_format(is_coefs_format, func_str):
+            print('Неверный формат ввода.')
+            continue
         show_function()
         plt.show()
         f = func_str
@@ -205,7 +322,7 @@ while code != 'end':
               '"end" - закрыть приложение.\n'
               '"r" - повтор прошлой команды.\n'
               '"f" - ввод ранее введённой функции.\n'
-              '"t" - ввод ранее введённой точки.\n'
+              '"p" - ввод ранее введённой точки.\n'
               'Параметры:\n'
               '"IS_MINIMUM" - определяет, ищется максимум или минимум функции. Формат ввода: IS_MINIMUM = True.'
               'По умолчанимю True.\n'
@@ -253,3 +370,4 @@ while code != 'end':
         code = input('Отправьте команду:\n')
     is_repeat = False
     is_param = False
+    coefs = [1, 1, 1]

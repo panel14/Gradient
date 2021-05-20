@@ -1,0 +1,6 @@
+<map id="main.get_gradient" name="main.get_gradient">
+<area shape="rect" id="node1" title="Функция, находит значение градиента в заданной точке" alt="" coords="5,31,131,57"/>
+<area shape="rect" id="node2" href="$namespacemain.html#a7ea3e7e7bf3baeeb4250c61cbd5b68b1" title="Функция частной производной по аргументу x в заданной точке" alt="" coords="179,5,272,32"/>
+<area shape="rect" id="node4" href="$namespacemain.html#a3c890df77486bb881751113237c81a7e" title="Функция частной производной по аргументу y в заданной точке" alt="" coords="179,56,272,83"/>
+<area shape="rect" id="node3" href="$namespacemain.html#a9081ad527c3c20318c7daed72ff7b818" title="Функция, находит значение основной функции в заданной точке" alt="" coords="320,31,480,57"/>
+</map>
