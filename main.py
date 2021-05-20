@@ -6,6 +6,7 @@ import math
 import numpy as np
 
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 ## @var Критерий точности алгоритма градиентного спуска
 eps = 0.0000001
@@ -100,8 +101,9 @@ def get_function_coefs(str_form, coefs):
 
     if check_function(str_form):
         for i in range(3):
-            match = re.search(r'[+-]?\s*\d*[xyz](\^2/\d+)?', str_form)
-            find = match.group(0)
+            match = re.findall(r'[+-]?\s*\d*([xyz]+\^2/?\d?)', str_form)
+            print(match)
+            find = match[i]
             analyse(find)
             str_form = str_form.replace(find, '')
             str_form.strip()
