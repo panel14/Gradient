@@ -103,12 +103,12 @@ def get_function_coefs(str_form, coefs):
 
     if check_function(str_form):
         for i in range(3):
-            match = re.findall(r'[+-]?\s*\d*([xyz]+\^2/?\d?)', str_form)
-            find = match[i]
+            match = re.search(r'[+-]?\s*\d*[xyz](\^2/\d+)?', str_form)
+            find = match.group(0)
             analyse(find)
             str_form = str_form.replace(find, '')
             str_form.strip()
-            return True
+        return True
     return False
 
 
@@ -132,9 +132,10 @@ def check_function(str_form):
 # @param: point - точка, в которой находится значение производной
 # @return: dx - значение частной производной в заданной точке
 def get_dx(point):
-    delta_p = Point(point.x + eps, point.y)
-    dx = (get_function_value(delta_p) - get_function_value(point)) / eps
-    return dx
+    # delta_p = Point(point.x + eps, point.y)
+    # dx = (get_function_value(delta_p) - get_function_value(point)) / eps
+    # return dx
+    return 2 * point.x / (coefs[0] * coefs[2])
 
 
 ## Функция частной производной по аргументу y в заданной точке
@@ -142,8 +143,10 @@ def get_dx(point):
 # @param: point - точка, в которой находится значение производной
 # @return: dy - значение частной производной в заданной точке
 def get_dy(point):
-    delta_p = Point(point.x, point.y + eps)
-    dy = (get_function_value(delta_p) - get_function_value(point)) / eps
+    # delta_p = Point(point.x, point.y + eps)
+    # dy = (get_function_value(delta_p) - get_function_value(point)) / eps
+    # return dy
+    dy = 2*point.y/(coefs[1]*coefs[2])
     return dy
 
 
@@ -171,8 +174,12 @@ def get_gradient(point):
 # @retval: True - критерий не преодолен, алгоритм продолжается
 # @retval: False - критерий преодолен, алгоритм останавливается
 def get_first_criterion(cur_p, prev_p, eps):
-    func_val_1 = get_function_value(cur_p)
-    func_val_2 = get_function_value(prev_p)
+    try:
+        func_val_1 = get_function_value(cur_p)
+        func_val_2 = get_function_value(prev_p)
+    except OverflowError:
+        print('Не удалось найти экстремум - значение точек слишком большие')
+        return False
     if abs(func_val_1 - func_val_2) >= eps:
         return True
     else:
@@ -233,7 +240,7 @@ def form_output_mess(is_coefs_format):
     if is_coefs_format:
         format = '2 -2 2'
     func_str = input('Введите функцию. Формат: ' + format +
-                     '\nЧтобы изменить формат ввода измените параметр "FORMAT_COEFS" на True.\n')
+                     '\nЧтобы изменить формат ввода измените параметр "FORMAT_COEFS".\n')
     return func_str
 
 
@@ -276,7 +283,7 @@ def check_format(is_coefs_format, str):
         else:
             return False
     else:
-        match = re.search(r'\d\s+\d\s+\d', str)
+        match = re.search(r'[-+]?\d+\s[-+]?\d+\s[-+]?\d+', str)
         if not match:
             return False
         str = str.strip()

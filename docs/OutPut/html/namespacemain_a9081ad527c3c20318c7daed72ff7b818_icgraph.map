@@ -1,8 +1,5 @@
 <map id="main.get_function_value" name="main.get_function_value">
-<area shape="rect" id="node1" title="Функция, находит значение основной функции в заданной точке" alt="" coords="387,81,547,108"/>
-<area shape="rect" id="node2" href="$namespacemain.html#a7ea3e7e7bf3baeeb4250c61cbd5b68b1" title="Функция частной производной по аргументу x в заданной точке" alt="" coords="215,5,309,32"/>
-<area shape="rect" id="node4" href="$namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274" title="Метод градиентного спуска" alt="" coords="5,56,137,83"/>
-<area shape="rect" id="node5" href="$namespacemain.html#a3c890df77486bb881751113237c81a7e" title="Функция частной производной по аргументу y в заданной точке" alt="" coords="215,56,309,83"/>
-<area shape="rect" id="node6" href="$namespacemain.html#a6a8ed1d7fd75eb8b0b6a39dd589e0aeb" title="Функция, определяет, пройден ли первый критерий останова" alt="" coords="185,157,339,184"/>
-<area shape="rect" id="node3" href="$namespacemain.html#ac532031b25de5d924825e0e153bf1533" title="Функция, находит значение градиента в заданной точке" alt="" coords="9,5,134,32"/>
+<area shape="rect" id="node1" title="Функция, находит значение основной функции в заданной точке" alt="" coords="207,31,367,57"/>
+<area shape="rect" id="node2" href="$namespacemain.html#a6a8ed1d7fd75eb8b0b6a39dd589e0aeb" title="Функция, определяет, пройден ли первый критерий останова" alt="" coords="5,5,159,32"/>
+<area shape="rect" id="node3" href="$namespacemain.html#ae0c0fc71cdc257b3366712b49f8d7274" title="Метод градиентного спуска" alt="" coords="16,56,148,83"/>
 </map>
